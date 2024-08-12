@@ -1,24 +1,55 @@
-import logo from './logo.svg';
+import React, { useState } from "react";
 import './App.css';
+import BotCollection from './BotCollection';
+import YourBotArmy from './YourBotArmy';
 
 function App() {
+  const [selectedBots, setSelectedBots] = useState([]);
+
+  const addToArmy = (bot) => {
+    if (!selectedBots.some(existingBot => existingBot.id === bot.id)) {
+      setSelectedBots((prevBots) => [...prevBots, bot]);
+    } else {
+      alert('This bot is already in your army!');
+    }
+  };
+
+  const removeFromArmy = (botId) => {
+    setSelectedBots((prevBots) => prevBots.filter(bot => bot.id !== botId));
+  };
+
+  const deleteBot = (botId) => {
+    
+    const confirmed = window.confirm("Are you sure you want to delete this bot?");
+    if (confirmed) {
+     
+      setSelectedBots((prevBots) => prevBots.filter(bot => bot.id !== botId));
+
+      
+      fetch(`http://localhost:8001/bots/${botId}`, {
+        method: 'DELETE',
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Bot deleted successfully');
+        } else {
+          console.error('Failed to delete bot');
+        }
+      })
+      .catch(error => {
+        console.error('Error deleting bot:', error);
+      });
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <h1 id="heading">BUILD YOUR OWN BOT ARMY</h1>
+    <div className="botclass">
+      <YourBotArmy bots={selectedBots} onBotRemove={removeFromArmy} onBotDelete={deleteBot} />
+      <BotCollection onBotSelect={addToArmy} />
     </div>
+    </>
   );
 }
 
