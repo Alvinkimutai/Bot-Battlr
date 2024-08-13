@@ -26,7 +26,7 @@ function YourBotArmy({ bots, onBotRemove, onBotDelete }) {
                         <button 
                           className="delete-button"
                           onClick={() => onBotDelete(bot.id)}>
-                            &#10006; {/* Unicode character for red "X" */}
+                            &#10006; 
                         </button>
                     </div>
                 ))
