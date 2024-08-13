@@ -7,7 +7,7 @@ function BotCollection({ onBotSelect }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/bots")
+    fetch("https://json-server-vercel-roan-zeta.vercel.app/bots")
       .then((response) => response.json())
       .then((data) => {
         setBot(data);

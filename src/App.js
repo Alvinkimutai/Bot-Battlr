@@ -27,7 +27,7 @@ function App() {
       setSelectedBots((prevBots) => prevBots.filter(bot => bot.id !== botId));
 
       
-      fetch(`http://localhost:3000/bots/${botId}`, {
+      fetch(`https://json-server-vercel-roan-zeta.vercel.app/bots/${botId}`, {
         method: 'DELETE',
       })
       .then(response => {
