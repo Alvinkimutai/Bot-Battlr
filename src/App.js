@@ -9,6 +9,7 @@ function App() {
   const addToArmy = (bot) => {
     if (!selectedBots.some(existingBot => existingBot.id === bot.id)) {
       setSelectedBots((prevBots) => [...prevBots, bot]);
+      alert(`${bot.name} added to your army!` )
     } else {
       alert('This bot is already in your army!');
     }
@@ -26,7 +27,7 @@ function App() {
       setSelectedBots((prevBots) => prevBots.filter(bot => bot.id !== botId));
 
       
-      fetch(`http://localhost:8001/bots/${botId}`, {
+      fetch(`http://localhost:3000/bots/${botId}`, {
         method: 'DELETE',
       })
       .then(response => {
